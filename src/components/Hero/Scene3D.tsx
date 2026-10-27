@@ -36,12 +36,18 @@ const BALANCED_PARTICLES = [
   { count: 120, size: 0.016, opacity: 0.4, spread: 16, zOffset: -5, speed: 0.14, parallax: 0.35 },
 ];
 
+const MOBILE_PARTICLES = [
+  { count: 50, size: 0.01, opacity: 0.2, spread: 22, zOffset: 2, speed: 0.08, parallax: 0.06 },
+  { count: 70, size: 0.012, opacity: 0.28, spread: 18, zOffset: -4, speed: 0.1, parallax: 0.12 },
+];
+
 export default function Scene3D({ mouseRef }: Scene3DProps) {
   const profile = usePerformance();
   const containerRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(true);
 
   const isCinematic = profile.tier === "cinematic";
+  const isMobile = profile.tier === "mobile";
 
   useEffect(() => {
     const el = containerRef.current;
@@ -56,7 +62,14 @@ export default function Scene3D({ mouseRef }: Scene3DProps) {
     return () => observer.disconnect();
   }, []);
 
-  const particleLayers = isCinematic ? CINEMATIC_PARTICLES : BALANCED_PARTICLES;
+  const particleLayers = isCinematic
+    ? CINEMATIC_PARTICLES
+    : isMobile
+      ? MOBILE_PARTICLES
+      : BALANCED_PARTICLES;
+
+  const cameraIntensity = isCinematic ? 0.85 : isMobile ? 0.22 : 0.5;
+  const monolithCount = isCinematic ? 5 : isMobile ? 2 : 3;
 
   return (
     <div ref={containerRef} className="absolute inset-0 z-0">
@@ -73,10 +86,7 @@ export default function Scene3D({ mouseRef }: Scene3DProps) {
         }}
       >
         <Suspense fallback={null}>
-          <CinematicCamera
-            mouseRef={mouseRef}
-            intensity={isCinematic ? 0.85 : 0.5}
-          />
+          <CinematicCamera mouseRef={mouseRef} intensity={cameraIntensity} />
 
           <Atmosphere fogNear={6} fogFar={isCinematic ? 36 : 30} />
           <CinematicLighting animated={isCinematic} />
@@ -94,8 +104,8 @@ export default function Scene3D({ mouseRef }: Scene3DProps) {
 
           <FloatingMonoliths
             mouseRef={mouseRef}
-            count={isCinematic ? 5 : 3}
-            parallax={0.25}
+            count={monolithCount}
+            parallax={isMobile ? 0.12 : 0.25}
           />
 
           <HolographicCrystal
@@ -105,7 +115,7 @@ export default function Scene3D({ mouseRef }: Scene3DProps) {
             ringSegments={Math.min(profile.ringSegments, 28)}
           />
 
-          <CinematicPostFX />
+          {!isMobile && <CinematicPostFX />}
         </Suspense>
       </Canvas>
     </div>

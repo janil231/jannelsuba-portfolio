@@ -18,6 +18,8 @@ export default function HeroCinematicOverlay({
     const smooth = { x: 0, y: 0 };
     const interval = 1000 / 30;
 
+    const mobileMq = window.matchMedia("(max-width: 767px)");
+
     const tick = (now: number) => {
       raf = requestAnimationFrame(tick);
       if (now - last < interval) return;
@@ -28,7 +30,9 @@ export default function HeroCinematicOverlay({
       smooth.y += (y - smooth.y) * 0.12;
 
       if (layerRef.current) {
-        layerRef.current.style.transform = `translate3d(${smooth.x * 20}px, ${smooth.y * 12}px, 0)`;
+        const parallaxX = mobileMq.matches ? 6 : 20;
+        const parallaxY = mobileMq.matches ? 4 : 12;
+        layerRef.current.style.transform = `translate3d(${smooth.x * parallaxX}px, ${smooth.y * parallaxY}px, 0)`;
       }
     };
 

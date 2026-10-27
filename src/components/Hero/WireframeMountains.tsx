@@ -25,35 +25,42 @@ export default function WireframeMountains({
   segments,
   animate,
 }: WireframeMountainsProps) {
-  const meshRef = useRef<THREE.Mesh>(null);
+  const solidRef = useRef<THREE.Mesh>(null);
+  const wireRef = useRef<THREE.Mesh>(null);
 
-  const geometry = useMemo(() => {
+  const solidGeometry = useMemo(() => {
     const geo = new THREE.PlaneGeometry(20, 8, segments, segments);
     geo.rotateX(-Math.PI / 2);
     deformHeights(geo.attributes.position.array as Float32Array);
     geo.computeVertexNormals();
-
-    const wireGeo = geo.clone();
-    return { solid: geo, wire: wireGeo };
+    return geo;
   }, [segments]);
 
+  const wireGeometry = useMemo(
+    () => solidGeometry.clone(),
+    [solidGeometry]
+  );
+
   useFrame((state) => {
-    if (!animate || !meshRef.current) return;
+    if (!animate) return;
 
-    const pos = geometry.solid.attributes.position.array as Float32Array;
-    const time = state.clock.elapsedTime * 0.15;
-    deformHeights(pos, time);
+    const solid = solidRef.current?.geometry;
+    const wire = wireRef.current?.geometry;
+    if (!solid || !wire) return;
 
-    geometry.solid.attributes.position.needsUpdate = true;
-    geometry.solid.computeVertexNormals();
+    const pos = solid.attributes.position.array as Float32Array;
+    deformHeights(pos, state.clock.elapsedTime * 0.15);
 
-    geometry.wire.attributes.position.array.set(pos);
-    geometry.wire.attributes.position.needsUpdate = true;
+    solid.attributes.position.needsUpdate = true;
+    solid.computeVertexNormals();
+
+    (wire.attributes.position.array as Float32Array).set(pos);
+    wire.attributes.position.needsUpdate = true;
   });
 
   return (
     <group position={[0, -1.5, -3]}>
-      <mesh ref={meshRef} geometry={geometry.solid}>
+      <mesh ref={solidRef} geometry={solidGeometry}>
         <meshStandardMaterial
           color="#00f0ff"
           emissive="#00f0ff"
@@ -65,7 +72,7 @@ export default function WireframeMountains({
           side={THREE.DoubleSide}
         />
       </mesh>
-      <mesh geometry={geometry.wire}>
+      <mesh ref={wireRef} geometry={wireGeometry}>
         <meshBasicMaterial
           color="#00f0ff"
           wireframe

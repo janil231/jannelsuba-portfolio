@@ -57,13 +57,13 @@ export default function DepthCard({
       transition={{ type: "spring", stiffness: 200, damping: 20 }}
     >
       <div
-        className="absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-300"
+        className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-300"
         style={{
           background: `radial-gradient(circle at ${glowX}% ${glowY}%, rgba(0, 240, 255, 0.08), transparent 60%)`,
           opacity: 1,
         }}
       />
-      {children}
+      <div className="relative z-[1]">{children}</div>
     </motion.div>
   );
 }

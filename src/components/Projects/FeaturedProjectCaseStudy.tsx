@@ -20,6 +20,8 @@ const TECH_GROUP_LABELS: Record<string, string> = {
   maps: "Maps",
   backendData: "Backend / Data",
   securityUx: "Security / UX",
+  ai: "AI & Vision",
+  accessibility: "Accessibility",
 };
 
 interface FeaturedProjectCaseStudyProps {
@@ -37,6 +39,12 @@ export default function FeaturedProjectCaseStudy({
   const caseLabel = String(caseStudyNumber).padStart(2, "0");
   const demoLabel =
     project.status === "in-development" ? "Live Preview" : "Live Demo";
+  const meta = [
+    `Role: ${project.role}`,
+    project.timeline,
+    project.client ? `Client: ${project.client}` : null,
+    project.team,
+  ].filter((item): item is string => Boolean(item));
 
   return (
     <ScrollReveal delay={revealDelay}>
@@ -55,23 +63,38 @@ export default function FeaturedProjectCaseStudy({
                     Active Development
                   </span>
                 )}
+                {project.status === "prototype" && (
+                  <span className="ml-3 inline-block border border-[#00f0ff]/25 bg-[#00f0ff]/[0.06] px-2 py-0.5 text-[9px] tracking-[0.2em] text-[#00f0ff]/70 uppercase">
+                    Concept Prototype
+                  </span>
+                )}
                 <h3 className="mt-3 text-3xl font-light tracking-tight text-[#c0c4d0] md:text-4xl lg:text-5xl">
                   {project.title}
                 </h3>
+                <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-[10px] tracking-[0.18em] text-[#c0c4d0]/35 uppercase">
+                  {meta.map((item) => (
+                    <span key={item} className="flex items-center gap-2">
+                      <span className="h-1 w-1 rounded-full bg-[#00f0ff]/40" />
+                      {item}
+                    </span>
+                  ))}
+                </div>
                 <p className="mt-4 text-sm leading-relaxed text-[#c0c4d0]/50 md:text-base">
                   {project.description}
                 </p>
               </div>
 
-              <CinematicButton
-                href={project.liveUrl}
-                external
-                size="md"
-                className="shrink-0"
-              >
-                <span className="tracking-[0.15em]">{demoLabel}</span>
-                <span className="text-lg">↗</span>
-              </CinematicButton>
+              {project.liveUrl && (
+                <CinematicButton
+                  href={project.liveUrl}
+                  external
+                  size="md"
+                  className="shrink-0"
+                >
+                  <span className="tracking-[0.15em]">{demoLabel}</span>
+                  <span className="text-lg">↗</span>
+                </CinematicButton>
+              )}
             </div>
           </div>
 
@@ -145,12 +168,20 @@ export default function FeaturedProjectCaseStudy({
             <span className="text-[10px] tracking-[0.2em] text-[#00f0ff]/30 uppercase">
               Case Study {caseLabel}
             </span>
-            <ExternalLink
-              href={project.liveUrl}
-              className="text-xs tracking-wider text-[#00f0ff]/60 uppercase transition-colors hover:text-[#00f0ff]"
-            >
-              Open {demoLabel} ↗
-            </ExternalLink>
+            {project.liveUrl ? (
+              <ExternalLink
+                href={project.liveUrl}
+                className="text-xs tracking-wider text-[#00f0ff]/60 uppercase transition-colors hover:text-[#00f0ff]"
+              >
+                Open {demoLabel} ↗
+              </ExternalLink>
+            ) : (
+              <span className="text-[10px] tracking-[0.2em] text-[#c0c4d0]/30 uppercase">
+                {project.status === "prototype"
+                  ? "Concept Prototype"
+                  : "Live — In Daily Use"}
+              </span>
+            )}
           </div>
         </article>
       </DepthCard>

@@ -45,7 +45,7 @@ export function useMousePosition() {
   }, [handleMouseMove]);
 
   useEffect(() => {
-    let prev = { x: 0, y: 0 };
+    const prev = { x: 0, y: 0 };
     const smooth = () => {
       prev.x += (smoothRef.current.x - prev.x) * 0.08;
       prev.y += (smoothRef.current.y - prev.y) * 0.08;

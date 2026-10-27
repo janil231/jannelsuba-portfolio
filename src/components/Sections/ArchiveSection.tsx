@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { FEATURED_PROJECTS } from "@/lib/portfolio-data";
 import ScrollReveal from "../Effects/ScrollReveal";
 import FeaturedProjectCaseStudy from "../Projects/FeaturedProjectCaseStudy";
+import CertificationsBlock from "./CertificationsBlock";
+import AwardsBlock from "./AwardsBlock";
 
 export default function ArchiveSection() {
   return (
@@ -16,22 +18,23 @@ export default function ArchiveSection() {
       <div className="relative mx-auto max-w-7xl">
         <ScrollReveal>
           <motion.span className="mb-4 block text-xs tracking-[0.3em] text-[#00f0ff]/50 uppercase">
-            Project Archive
+            Case Studies
           </motion.span>
         </ScrollReveal>
 
         <ScrollReveal delay={0.1}>
           <h2 className="mb-6 text-5xl font-light leading-none tracking-tight md:text-7xl lg:text-8xl">
-            <span className="text-[#c0c4d0]">FEATURED</span>
+            <span className="text-[#c0c4d0]">SYSTEM DEVELOPMENT</span>
             <br />
-            <span className="text-[#00f0ff]">PROJECTS</span>
+            <span className="text-[#00f0ff]">PORTFOLIO</span>
           </h2>
         </ScrollReveal>
 
         <ScrollReveal delay={0.15}>
           <p className="mb-12 max-w-2xl text-base leading-relaxed text-[#c0c4d0]/40 md:text-lg">
-            Production-ready and in-progress systems built with security,
-            scalability, and real-world workflows in mind.
+            Real systems built for academic, municipal, and local-business use
+            cases—from capstone research to a gym management app in daily
+            operation.
           </p>
         </ScrollReveal>
 
@@ -45,6 +48,9 @@ export default function ArchiveSection() {
             />
           ))}
         </div>
+
+        <CertificationsBlock />
+        <AwardsBlock />
       </div>
 
       <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#00f0ff]/20 to-transparent" />

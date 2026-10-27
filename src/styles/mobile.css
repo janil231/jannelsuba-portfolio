@@ -1,0 +1,90 @@
+/* Mobile-only styles — desktop (768px+) is never affected */
+
+@media (max-width: 767px) {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Section rhythm */
+  #identity,
+  #experience,
+  #archive,
+  #system,
+  #visions,
+  #transmission {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+    padding-top: 5.5rem;
+    padding-bottom: 5.5rem;
+  }
+
+  #certifications {
+    scroll-margin-top: 5rem;
+  }
+
+  /* Prevent horizontal overflow from long words */
+  #home h1,
+  #home h1 .word,
+  #identity h2,
+  #experience h2,
+  #archive h2,
+  #system h2,
+  #visions h2,
+  #transmission h2,
+  #certifications h3 {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    font-size: clamp(2.25rem, 9vw, 3.25rem);
+    line-height: 1.05;
+  }
+
+  #experience h3,
+  #archive h3,
+  #certifications h4,
+  #awards h4 {
+    font-size: clamp(1.125rem, 4.5vw, 1.5rem);
+  }
+
+  #identity .grid.auto-rows-fr > * {
+    min-width: 0;
+  }
+
+  #identity .grid.auto-rows-fr p {
+    overflow-wrap: anywhere;
+  }
+
+  /* Touch-friendly tap targets in content sections */
+  #experience a,
+  #archive a,
+  #transmission a,
+  #certifications a,
+  #awards a {
+    min-height: 44px;
+  }
+
+  /* Case study buttons stack cleanly */
+  #archive .space-y-12 > * {
+    margin-bottom: 0;
+  }
+}
+
+/* Narrow phone widths */
+@media (max-width: 390px) {
+  #home .hero-mobile-title {
+    font-size: clamp(2rem, 9.5vw, 2.65rem);
+  }
+}
+
+@media (max-width: 320px) {
+  #home .hero-mobile-title {
+    font-size: clamp(1.85rem, 9vw, 2.35rem);
+  }
+
+  #home .hero-mobile-cta {
+    gap: 0.75rem;
+  }
+}

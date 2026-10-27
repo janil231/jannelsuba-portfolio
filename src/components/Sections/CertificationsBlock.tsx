@@ -10,34 +10,44 @@ import CinematicButton from "../ui/CinematicButton";
 
 function CertificatePreview({ cert }: { cert: (typeof CERTIFICATES)[number] }) {
   return (
-    <div className="relative mb-5 h-[200px] shrink-0 overflow-hidden border border-[#00f0ff]/10 bg-[#0c0e12] sm:h-[210px]">
-      <Image
-        src={cert.image}
-        alt={cert.title}
-        fill
-        className="object-contain object-center p-2 transition-transform duration-700 group-hover:scale-[1.02]"
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-      />
+    <div className="relative mb-5 flex h-[200px] shrink-0 items-center justify-center overflow-hidden border border-[#00f0ff]/10 bg-[#0c0e12] sm:h-[210px]">
+      {cert.image ? (
+        <Image
+          src={cert.image}
+          alt={cert.title}
+          fill
+          className="object-contain object-center p-2 transition-transform duration-700 group-hover:scale-[1.02]"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
+      ) : (
+        <div className="flex flex-col items-center gap-3 px-6 text-center">
+          <span className="text-[10px] tracking-[0.3em] text-[#00f0ff]/40 uppercase">
+            {cert.issuer}
+          </span>
+          <span className="h-px w-12 bg-gradient-to-r from-transparent via-[#00f0ff]/30 to-transparent" />
+          <span className="text-xs tracking-[0.2em] text-[#c0c4d0]/40 uppercase">
+            Certificate
+          </span>
+        </div>
+      )}
     </div>
   );
 }
 
 function CertificateLink({ cert }: { cert: (typeof CERTIFICATES)[number] }) {
   const href = cert.pdf ?? cert.href ?? cert.image;
-  const label = cert.pdf
-    ? "Open PDF ↗"
-    : cert.href
-      ? "View Credential ↗"
-      : "View Certificate ↗";
+  const label = cert.pdf || cert.image ? "View Certificate" : "View on Credly";
+
+  if (!href) return null;
 
   return (
-    <div className="mt-auto min-h-[2.75rem] border-t border-[#00f0ff]/10 pt-4">
+    <div className="relative z-10 mt-auto min-h-[2.75rem] border-t border-[#00f0ff]/10 pt-4">
       <ExternalLink
         href={href}
         external
-        className="inline-flex items-center gap-2 text-xs tracking-wider text-[#00f0ff]/60 uppercase transition-colors hover:text-[#00f0ff]"
+        className="inline-flex cursor-pointer items-center gap-2 text-xs tracking-wider text-[#00f0ff]/70 uppercase underline-offset-4 transition-colors hover:text-[#00f0ff] hover:underline"
       >
-        {label}
+        {label} ↗
       </ExternalLink>
     </div>
   );
@@ -45,7 +55,7 @@ function CertificateLink({ cert }: { cert: (typeof CERTIFICATES)[number] }) {
 
 export default function CertificationsBlock() {
   return (
-    <div className="mt-24">
+    <div id="certifications" className="mt-16 max-md:mt-12 md:mt-24">
       <ScrollReveal>
         <motion.span className="mb-4 block text-xs tracking-[0.3em] text-[#00f0ff]/50 uppercase">
           Certifications
@@ -53,7 +63,7 @@ export default function CertificationsBlock() {
       </ScrollReveal>
 
       <ScrollReveal delay={0.1}>
-        <h3 className="mb-4 text-3xl font-light tracking-tight text-[#c0c4d0] md:text-4xl">
+        <h3 className="mb-4 text-3xl font-light tracking-tight text-[#c0c4d0] max-md:text-[clamp(1.5rem,6vw,1.875rem)] md:text-4xl">
           <span className="text-[#00f0ff]">CREDENTIALS</span> & BADGES
         </h3>
         <p className="mb-6 max-w-2xl text-sm leading-relaxed text-[#c0c4d0]/40 md:text-base">

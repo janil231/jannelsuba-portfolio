@@ -1,4 +1,4 @@
-export type PerformanceTier = "lite" | "balanced" | "cinematic";
+export type PerformanceTier = "lite" | "mobile" | "balanced" | "cinematic";
 
 export interface PerformanceProfile {
   tier: PerformanceTier;
@@ -21,6 +21,25 @@ export interface PerformanceProfile {
 }
 
 export const PERFORMANCE_PROFILES: Record<PerformanceTier, PerformanceProfile> = {
+  mobile: {
+    tier: "mobile",
+    enable3D: true,
+    enablePostProcessing: false,
+    particleCount: 120,
+    particleSpeed: 0.08,
+    enableFog: false,
+    enableLenis: false,
+    enableCustomCursor: false,
+    planetSegments: 32,
+    wireframeSegments: 24,
+    animateMountains: false,
+    useDistortMaterial: false,
+    showRings: true,
+    ringSegments: 20,
+    dpr: 1,
+    antialias: false,
+    reduceMotion: true,
+  },
   lite: {
     tier: "lite",
     enable3D: false,
@@ -89,8 +108,12 @@ export function detectPerformanceTier(): PerformanceTier {
   const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
   const narrowViewport = window.innerWidth < 768;
 
-  if (reducedMotion || coarsePointer || narrowViewport) {
+  if (reducedMotion) {
     return "lite";
+  }
+
+  if (coarsePointer || narrowViewport) {
+    return "mobile";
   }
 
   const nav = navigator as Navigator & {

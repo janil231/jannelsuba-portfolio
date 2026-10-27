@@ -22,6 +22,11 @@ interface LayeredParticlesProps {
   animate?: boolean;
 }
 
+function pseudoRandom(seed: number) {
+  const value = Math.sin(seed * 12.9898) * 43758.5453;
+  return value - Math.floor(value);
+}
+
 function ParticleLayer({
   config,
   mouseRef,
@@ -38,10 +43,13 @@ function ParticleLayer({
   const positions = useMemo(() => {
     const pos = new Float32Array(config.count * 3);
     for (let i = 0; i < config.count; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * config.spread;
-      pos[i * 3 + 1] = (Math.random() - 0.5) * config.spread * 0.6;
+      pos[i * 3] = (pseudoRandom(i * 3 + 1) - 0.5) * config.spread;
+      pos[i * 3 + 1] =
+        (pseudoRandom(i * 3 + 2) - 0.5) * config.spread * 0.6;
       pos[i * 3 + 2] =
-        (Math.random() - 0.5) * config.spread - 8 + config.zOffset;
+        (pseudoRandom(i * 3 + 3) - 0.5) * config.spread -
+        8 +
+        config.zOffset;
     }
     return pos;
   }, [config.count, config.spread, config.zOffset]);

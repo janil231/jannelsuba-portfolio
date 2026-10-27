@@ -1,10 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { SKILL_GROUPS } from "@/lib/portfolio-data";
+import { PERSONAL, SKILL_GROUPS } from "@/lib/portfolio-data";
 import ScrollReveal from "../Effects/ScrollReveal";
-import CertificationsBlock from "./CertificationsBlock";
-
 export default function SystemSection() {
   return (
     <section
@@ -29,10 +27,8 @@ export default function SystemSection() {
         </ScrollReveal>
 
         <ScrollReveal delay={0.15}>
-          <p className="mb-16 max-w-2xl text-base leading-relaxed text-[#c0c4d0]/40">
-            Technologies I use across academic systems, municipal tourism
-            platforms, and immersive web experiences—from Firebase and MERN
-            stacks to secure auth, maps, and production deployment.
+          <p className="mb-16 max-w-3xl text-base leading-relaxed text-[#c0c4d0]/40 md:text-lg">
+            {PERSONAL.skillStatement}
           </p>
         </ScrollReveal>
 
@@ -70,8 +66,6 @@ export default function SystemSection() {
             </ScrollReveal>
           ))}
         </div>
-
-        <CertificationsBlock />
       </div>
 
       <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#00f0ff]/20 to-transparent" />

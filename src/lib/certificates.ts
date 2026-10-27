@@ -6,7 +6,7 @@ export interface Certificate {
   issuer: string;
   issued?: string;
   description?: string;
-  image: string;
+  image?: string;
   pdf?: string;
   href?: string;
 }
@@ -60,6 +60,24 @@ export const CERTIFICATES: Certificate[] = [
       "Completion certificate on core machine learning terminology and workflow processes.",
     image: "/certificates/b5875d04-a710-4754-a905-5cb7482f33a3.jpg",
     pdf: "/certificates/b5875d04-a710-4754-a905-5cb7482f33a3.pdf",
+  },
+  {
+    id: "cisco-introduction-to-data-science",
+    title: "Introduction to Data Science",
+    issuer: "Cisco",
+    issued: "November 19, 2025",
+    description:
+      "Foundational data science credential covering data analysis, visualization, and the data science workflow.",
+    href: CONTACT.credly,
+  },
+  {
+    id: "cisco-linux-essentials",
+    title: "Linux Essentials",
+    issuer: "Cisco",
+    issued: "April 21, 2026",
+    description:
+      "Linux fundamentals credential covering the command line, file systems, and open-source operating system basics.",
+    href: CONTACT.credly,
   },
 ];
 

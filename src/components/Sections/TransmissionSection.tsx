@@ -26,6 +26,18 @@ const contactLinks = [
     external: true,
   },
   {
+    label: "GitHub",
+    value: "janil231",
+    href: CONTACT.github,
+    external: true,
+  },
+  {
+    label: "Portfolio",
+    value: "jannelsuba-portfolio.vercel.app",
+    href: CONTACT.portfolio,
+    external: true,
+  },
+  {
     label: "Facebook",
     value: "chuchichu24",
     href: CONTACT.facebook,
@@ -117,6 +129,15 @@ export default function TransmissionSection() {
               <span className="tracking-[0.2em]">Credly</span>
               <span className="text-lg">↗</span>
             </CinematicButton>
+            <CinematicButton
+              href={CONTACT.cv}
+              download="Jannel_Suba_CV_2026.pdf"
+              variant="outline"
+              size="lg"
+            >
+              <span className="tracking-[0.2em]">Download CV</span>
+              <span className="text-lg">↓</span>
+            </CinematicButton>
           </div>
         </ScrollReveal>
       </div>
@@ -132,8 +153,8 @@ export default function TransmissionSection() {
           animate={{ opacity: [0.2, 0.4, 0.2] }}
           transition={{ duration: 4, repeat: Infinity }}
         >
-          Jannel Suba &copy; {new Date().getFullYear()} &mdash; Built Through
-          Obsession
+          Jannel Crespo Suba &copy; {new Date().getFullYear()} &mdash; Built
+          Through Obsession
         </motion.p>
       </motion.div>
     </section>

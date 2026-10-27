@@ -8,6 +8,7 @@ interface CinematicButtonProps {
   onClick?: () => void;
   href?: string;
   external?: boolean;
+  download?: boolean | string;
   variant?: "primary" | "outline" | "ghost";
   size?: "sm" | "md" | "lg";
   className?: string;
@@ -18,6 +19,7 @@ export default function CinematicButton({
   onClick,
   href,
   external = false,
+  download = false,
   variant = "primary",
   size = "md",
   className = "",
@@ -59,7 +61,7 @@ export default function CinematicButton({
     onMouseEnter: () => setHovered(true),
     onMouseMove: handleMouseMove,
     onMouseLeave: handleMouseLeave,
-    className: `relative inline-flex overflow-hidden rounded-full font-medium tracking-wider uppercase transition-colors duration-300 ${sizeClasses[size]} ${variantClasses[variant]} ${className}`,
+    className: `relative inline-flex overflow-hidden rounded-full font-medium tracking-wider uppercase transition-colors duration-300 ${sizeClasses[size]} ${variantClasses[variant]} max-md:min-h-[48px] max-md:touch-manipulation max-md:active:scale-[0.98] ${className}`,
     animate: {
       x: position.x,
       y: position.y,
@@ -117,6 +119,9 @@ export default function CinematicButton({
         onClick={onClick}
         {...(external
           ? { target: "_blank", rel: "noopener noreferrer" }
+          : {})}
+        {...(download
+          ? { download: typeof download === "string" ? download : "" }
           : {})}
         {...sharedProps}
       >

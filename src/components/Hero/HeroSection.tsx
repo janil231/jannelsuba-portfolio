@@ -93,13 +93,13 @@ export default function HeroSection() {
     <section
       id="home"
       ref={heroRef}
-      className="relative flex min-h-screen items-center overflow-hidden"
+      className="relative flex min-h-screen items-center overflow-hidden max-md:min-h-[100dvh] max-md:items-end max-md:pb-32 max-md:pt-[4.75rem]"
     >
       {profile.enable3D ? (
-        <>
+        <div className="max-md:pointer-events-none max-md:absolute max-md:inset-0 max-md:z-0 max-md:translate-x-[22%] max-md:scale-[0.82] max-md:opacity-[0.55] md:contents">
           <Scene3D mouseRef={mouseRef} />
           <HeroCinematicOverlay mouseRef={mouseRef} />
-        </>
+        </div>
       ) : (
         <HeroBackground />
       )}
@@ -111,7 +111,13 @@ export default function HeroSection() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_55%_45%,transparent_0%,#08080a_75%)] opacity-60" />
       </div>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-start px-6 md:px-12 lg:px-24">
+      <div className="pointer-events-none absolute inset-0 z-[2] hidden max-md:block">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#08080a]/90 via-[#08080a]/75 to-[#08080a]/95" />
+        <div className="absolute inset-y-0 left-0 w-[88%] bg-gradient-to-r from-[#08080a] via-[#08080a]/92 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#08080a] to-transparent" />
+      </div>
+
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-start px-6 max-md:max-w-full max-md:px-4 max-md:pb-2 md:px-12 lg:px-24">
         <motion.div
           className="mb-4 flex items-center gap-2"
           initial={profile.reduceMotion ? false : { opacity: 0, x: -20 }}
@@ -126,12 +132,12 @@ export default function HeroSection() {
 
         <h1
           ref={titleRef}
-          className="max-w-5xl text-6xl font-light leading-[1.05] tracking-tight md:text-8xl lg:text-9xl"
+          className="hero-mobile-title max-w-5xl text-6xl font-light leading-[1.05] tracking-tight max-md:text-[clamp(2.35rem,10.5vw,3.65rem)] max-md:leading-[1.08] md:text-8xl lg:text-9xl"
         >
           {["JANNEL", "SUBA"].map((word, i) => (
             <span
               key={word}
-              className="word inline-block overflow-hidden"
+              className="word inline-block overflow-hidden max-md:block max-md:overflow-visible"
               style={{ perspective: "800px" }}
             >
               <span
@@ -159,14 +165,14 @@ export default function HeroSection() {
 
         <p
           ref={headlineRef}
-          className="mt-8 max-w-2xl text-lg font-light leading-relaxed text-[#c0c4d0]/70 md:text-xl"
+          className="mt-8 max-w-2xl text-lg font-light leading-relaxed text-[#c0c4d0]/70 max-md:mt-5 max-md:text-[clamp(0.95rem,3.8vw,1.125rem)] max-md:leading-relaxed md:text-xl"
         >
           {PERSONAL.heroHeadline}
         </p>
 
         <p
           ref={subtitleRef}
-          className="mt-4 max-w-xl text-base leading-relaxed text-[#c0c4d0]/40 md:text-lg"
+          className="mt-4 max-w-xl text-base leading-relaxed text-[#c0c4d0]/40 max-md:mt-3 max-md:text-[clamp(0.875rem,3.5vw,1rem)] max-md:leading-relaxed md:text-lg"
         >
           {PERSONAL.heroDescription}
         </p>
@@ -177,13 +183,22 @@ export default function HeroSection() {
 
         <div
           ref={ctaRef}
-          className="mt-12 flex flex-col items-start gap-6 sm:flex-row sm:items-center"
+          className="hero-mobile-cta mt-12 flex w-full flex-col items-stretch gap-6 max-md:mt-8 max-md:gap-4 sm:flex-row sm:items-center max-md:!flex-col max-md:!items-stretch"
         >
-          <CinematicButton size="lg" onClick={scrollToArchive}>
+          <CinematicButton
+            size="lg"
+            onClick={scrollToArchive}
+            className="max-md:w-full max-md:justify-center"
+          >
             <span className="tracking-[0.2em]">View Projects</span>
             <span className="text-lg">→</span>
           </CinematicButton>
-          <CinematicButton variant="ghost" size="md" onClick={scrollToContact}>
+          <CinematicButton
+            variant="ghost"
+            size="md"
+            onClick={scrollToContact}
+            className="max-md:w-full max-md:min-h-[48px] max-md:justify-center"
+          >
             <span className="tracking-[0.2em]">Contact Me</span>
           </CinematicButton>
         </div>
@@ -191,7 +206,7 @@ export default function HeroSection() {
 
       {!profile.reduceMotion && (
         <motion.div
-          className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2"
+          className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 max-md:bottom-6"
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
         >
@@ -204,7 +219,7 @@ export default function HeroSection() {
         </motion.div>
       )}
 
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-[3] h-64 bg-gradient-to-t from-[#08080a] via-[#08080a]/80 to-transparent" />
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-[3] h-64 bg-gradient-to-t from-[#08080a] via-[#08080a]/80 to-transparent max-md:h-40" />
     </section>
   );
 }

@@ -6,6 +6,7 @@ import { PerformanceProvider, usePerformance } from "@/contexts/PerformanceConte
 import HeroSection from "@/components/Hero/HeroSection";
 import Navbar from "@/components/Navigation/Navbar";
 import IdentitySection from "@/components/Sections/IdentitySection";
+import ExperienceSection from "@/components/Sections/ExperienceSection";
 import ArchiveSection from "@/components/Sections/ArchiveSection";
 import SystemSection from "@/components/Sections/SystemSection";
 import VisionsSection from "@/components/Sections/VisionsSection";
@@ -50,6 +51,7 @@ function HomeContent() {
       <main className="relative z-10">
         <HeroSection />
         <IdentitySection />
+        <ExperienceSection />
         <ArchiveSection />
         <SystemSection />
         <VisionsSection />

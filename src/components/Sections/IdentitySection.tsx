@@ -32,8 +32,8 @@ export default function IdentitySection() {
           </h2>
         </ScrollReveal>
 
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-24">
-          <div className="space-y-8">
+        <div className="grid gap-12 lg:grid-cols-2 lg:items-stretch lg:gap-24">
+          <div className="flex flex-col gap-8">
             <ScrollReveal delay={0.2}>
               <p className="text-lg leading-relaxed text-[#c0c4d0]/60 md:text-xl">
                 {PERSONAL.summary}
@@ -46,15 +46,23 @@ export default function IdentitySection() {
               </p>
             </ScrollReveal>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid auto-rows-fr grid-cols-1 gap-3 min-[420px]:grid-cols-2 min-[420px]:gap-4">
               {IDENTITY_TRAITS.map((trait, i) => (
-                <ScrollReveal key={trait.label} delay={0.2 + i * 0.05}>
-                  <DepthCard intensity={5}>
-                    <div className="border border-[#00f0ff]/10 bg-[#00f0ff]/[0.02] px-4 py-3">
+                <ScrollReveal
+                  key={trait.label}
+                  delay={0.2 + i * 0.05}
+                  className={`h-full ${
+                    i === IDENTITY_TRAITS.length - 1
+                      ? "min-[420px]:col-span-2"
+                      : ""
+                  }`}
+                >
+                  <DepthCard intensity={5} className="h-full">
+                    <div className="flex h-full min-h-[5.5rem] flex-col justify-center border border-[#00f0ff]/10 bg-[#00f0ff]/[0.02] px-4 py-4 sm:min-h-[6rem] sm:px-5 sm:py-4">
                       <span className="text-[10px] tracking-[0.2em] text-[#00f0ff]/40 uppercase">
                         {trait.label}
                       </span>
-                      <p className="mt-1 text-sm font-medium text-[#c0c4d0]">
+                      <p className="mt-1.5 text-sm font-medium leading-snug text-[#c0c4d0] sm:text-base">
                         {trait.value}
                       </p>
                     </div>
@@ -64,29 +72,43 @@ export default function IdentitySection() {
             </div>
           </div>
 
-          <div className="flex flex-col justify-center">
-            <ScrollReveal delay={0.3} direction="right">
-              <DepthCard intensity={6}>
-                <div className="border border-[#00f0ff]/10 bg-[#00f0ff]/[0.02] p-8 md:p-10">
+          <div className="flex flex-col lg:min-h-0">
+            <ScrollReveal
+              delay={0.3}
+              direction="right"
+              className="h-full min-h-0 flex-1"
+            >
+              <DepthCard intensity={6} className="h-full">
+                <div className="flex h-full min-h-[280px] flex-col border border-[#00f0ff]/10 bg-[#00f0ff]/[0.02] p-6 sm:min-h-[300px] sm:p-8 md:min-h-0 md:p-10">
                   <span className="text-[10px] tracking-[0.2em] text-[#00f0ff]/40 uppercase">
                     Education
                   </span>
-                  <h3 className="mt-4 text-2xl font-light leading-snug text-[#c0c4d0] md:text-3xl">
-                    {EDUCATION.degree}
+                  <h3 className="mt-4 text-xl font-light leading-snug text-[#c0c4d0] sm:text-2xl md:text-3xl">
+                    {EDUCATION.degree} — {EDUCATION.year}
                   </h3>
-                  <p className="mt-4 text-base text-[#00f0ff]/70">
-                    {EDUCATION.school}
+                  <p className="mt-3 text-sm text-[#00f0ff]/70 sm:text-base">
+                    {EDUCATION.school}, {EDUCATION.address}
                   </p>
-                  <div className="mt-6 space-y-2 border-t border-[#00f0ff]/10 pt-6">
+                  <div className="mt-auto space-y-2 border-t border-[#00f0ff]/10 pt-6">
                     <p className="text-sm text-[#c0c4d0]/50">
                       <span className="text-[#00f0ff]/40">Status — </span>
-                      {EDUCATION.year}
+                      {EDUCATION.status}
                     </p>
                     <p className="text-sm text-[#c0c4d0]/50">
                       <span className="text-[#00f0ff]/40">
                         Expected Graduation —{" "}
                       </span>
                       {EDUCATION.graduation}
+                    </p>
+                    <p className="text-sm leading-relaxed text-[#c0c4d0]/50">
+                      <span className="text-[#00f0ff]/40">Dean&apos;s Lister — </span>
+                      {EDUCATION.honorsPeriod}
+                    </p>
+                    <p className="text-sm text-[#c0c4d0]/50">
+                      <span className="text-[#00f0ff]/40">
+                        General Average —{" "}
+                      </span>
+                      {EDUCATION.generalAverage}
                     </p>
                   </div>
                 </div>

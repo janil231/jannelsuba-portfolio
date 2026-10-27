@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import MagneticButton from "./MagneticButton";
+import MobileMenu, { MobileMenuButton } from "./MobileMenu";
 
 const navItems = [
   { label: "Home", href: "#home" },
   { label: "Identity", href: "#identity" },
+  { label: "Experience", href: "#experience" },
   { label: "Archive", href: "#archive" },
   { label: "System", href: "#system" },
   { label: "Visions", href: "#visions" },
@@ -53,7 +55,7 @@ export default function Navbar() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay: 0.5 }}
-        className={`fixed left-0 right-0 top-0 z-50 px-6 py-4 transition-all duration-500 ${
+        className={`fixed left-0 right-0 top-0 z-50 px-6 py-4 transition-all duration-500 max-md:px-4 max-md:py-3 ${
           scrolled
             ? "bg-[#08080a]/80 shadow-lg shadow-[#00f0ff]/5 backdrop-blur-xl"
             : "bg-transparent"
@@ -62,7 +64,7 @@ export default function Navbar() {
         <div className="mx-auto flex max-w-7xl items-center justify-between">
           <MagneticButton>
             <span
-              className="cursor-pointer text-lg font-bold tracking-widest text-[#00f0ff]"
+              className="cursor-pointer text-lg font-bold tracking-widest text-[#00f0ff] max-md:text-base max-md:tracking-[0.2em]"
               onClick={() => scrollTo("#home")}
             >
               JANNEL SUBA
@@ -92,52 +94,19 @@ export default function Navbar() {
             ))}
           </div>
 
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="relative z-50 flex h-10 w-10 flex-col items-center justify-center gap-1.5 md:hidden"
-          >
-            <motion.span
-              animate={mobileOpen ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }}
-              className="block h-[1px] w-6 bg-[#c0c4d0]"
-            />
-            <motion.span
-              animate={mobileOpen ? { opacity: 0 } : { opacity: 1 }}
-              className="block h-[1px] w-6 bg-[#c0c4d0]"
-            />
-            <motion.span
-              animate={mobileOpen ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }}
-              className="block h-[1px] w-6 bg-[#c0c4d0]"
-            />
-          </button>
+          <MobileMenuButton
+            open={mobileOpen}
+            onToggle={() => setMobileOpen((v) => !v)}
+          />
         </div>
       </motion.nav>
 
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 flex items-center justify-center bg-[#08080a]/95 backdrop-blur-2xl md:hidden"
-          >
-            <div className="flex flex-col items-center gap-8">
-              {navItems.map((item, i) => (
-                <motion.button
-                  key={item.label}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -30 }}
-                  transition={{ delay: i * 0.08 }}
-                  onClick={() => scrollTo(item.href)}
-                  className="text-3xl font-light tracking-widest text-[#c0c4d0]/70 hover:text-[#00f0ff]"
-                >
-                  {item.label}
-                </motion.button>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <MobileMenu
+        open={mobileOpen}
+        onClose={() => setMobileOpen(false)}
+        activeSection={activeSection}
+        onNavigate={scrollTo}
+      />
     </>
   );
 }
